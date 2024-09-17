@@ -9,7 +9,7 @@ import {
   GitHubIcon,
   LinkedInIcon,
 } from '@/components/SocialIcons'
-import portraitImage from '@/images/portrait.jpg'
+import portraitImage from '@/images/photos/about-image.jpeg'
 
 function SocialLink({ className, href, children, icon: Icon }) {
   return (
@@ -60,35 +60,51 @@ export default function About() {
           </div>
           <div className="lg:order-first lg:row-span-2">
             <h1 className="text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl">
-              I’m Spencer Sharp. I live in New York City, where I design the
-              future.
+              I’m Yassin Ezaouibi, a full-stack developer from Casablanca, Morocco.
             </h1>
             <div className="mt-6 space-y-7 text-base text-zinc-600 dark:text-zinc-400">
               <p>
-                I’ve loved making things for as long as I can remember, and
-                wrote my first program when I was 6 years old, just two weeks
-                after my mom brought home the brand new Macintosh LC 550 that I
-                taught myself to type on.
+                with a passion for creating powerful and intuitive web applications.
+                From an early age, I was fascinated by how things work, and my
+                love for technology started with a high school interest in programming.
+                {/* eslint-disable-next-line react/no-unescaped-entities */}
+                It didn't take long for me to start building small projects, fueled by
+                the curiosity that has continued to drive my career.
               </p>
               <p>
-                The only thing I loved more than computers as a kid was space.
-                When I was 8, I climbed the 40-foot oak tree at the back of our
-                yard while wearing my older sister’s motorcycle helmet, counted
-                down from three, and jumped — hoping the tree was tall enough
-                that with just a bit of momentum I’d be able to get to orbit.
+                While I initially studied the sciences, it was in web development that
+                I found my calling. In 2023, during an internship at Redgato, I contributed
+                to platforms like Dentalix, which streamlines the ordering process for
+                dentists, and Anomalia, an anomaly detection system for water dams
+                utilizing AI. This experience gave me the opportunity to dive deep into
+                full-stack web development, particularly with Java Spring Boot and Angular.
               </p>
               <p>
-                I spent the next few summers indoors working on a rocket design,
-                while I recovered from the multiple surgeries it took to fix my
-                badly broken legs. It took nine iterations, but when I was 15 I
-                sent my dad’s Blackberry into orbit and was able to transmit a
-                photo back down to our family computer from space.
+                Following this, I completed a structured bootcamp program that allowed
+                me to sharpen my technical skills and develop over 10 concrete web projects.
+                Through this training, I specialized in Java Spring Boot and Angular,
+                enhancing my expertise in both front-end and back-end development.
               </p>
               <p>
-                Today, I’m the founder of Planetaria, where we’re working on
-                civilian space suits and manned shuttle kits you can assemble at
-                home so that the next generation of kids really <em>can</em>{' '}
-                make it to orbit — from the comfort of their own backyards.
+                Recently, I completed a three-month internship at ID&A TECH,
+                where I contributed to several web development projects.
+                Under their supervision, I worked on both front-end and back-end
+                tasks, focusing on creating high-performance applications,
+                developing prototypes, and conducting rigorous testing to ensure
+                the quality and security of the final products. My work included
+                designing user interfaces using React, integrating RESTful APIs,
+                and managing databases with MongoDB. I also collaborated on
+                full-stack development using the MERN stack
+                (MongoDB, Express.js, React, Node.js).
+              </p>
+              <p>
+                Today, I’m focused on combining creativity, adaptability, and
+                strong technical skills in languages like Java, TypeScript, and
+                frameworks like Spring and Angular, to build the next generation
+                of applications. My recent experiences have deepened my
+                knowledge, and I’m committed to pushing the boundaries of
+                web technology to continue contributing to meaningful,
+                cutting-edge projects.
               </p>
             </div>
           </div>
