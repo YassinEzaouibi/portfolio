@@ -268,15 +268,18 @@ export default function Tools() {
                 A powerful IDE for Java development, with great support for other languages and frameworks. The Linux version works flawlessly.
               </Tool>
               <Tool title="WebStorm">
+                {/* eslint-disable-next-line react/no-unescaped-entities */}
                 JetBrains' IDE specifically tailored for web development, making JavaScript and related technologies a breeze to work with on Ubuntu.
               </Tool>
               <Tool title="Visual Studio Code">
+                {/* eslint-disable-next-line react/no-unescaped-entities */}
                 A versatile, lightweight code editor that's become indispensable in my Ubuntu setup, especially for quick edits and working with various languages.
               </Tool>
               <Tool title="Postman">
                 Essential tool for API development and testing, making it easy to send requests and analyze responses. Works great on Linux.
               </Tool>
               <Tool title="Git">
+                {/* eslint-disable-next-line react/no-unescaped-entities */}
                 Version control system that's integral to my workflow, with seamless integration in the Ubuntu terminal.
               </Tool>
             </ToolsSection>
