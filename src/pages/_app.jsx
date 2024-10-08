@@ -6,13 +6,16 @@ import { Header } from '@/components/Header'
 import '@/styles/tailwind.css'
 import 'focus-visible'
 import {Analytics} from "@vercel/analytics/next";
+import {useRouter} from "next/router";
 
 function usePrevious(value) {
   let ref = useRef()
+  const router =useRouter();
 
   useEffect(() => {
     ref.current = value
-  }, [value])
+    if(!router.isReady) return;
+  }, [value, router.isReady])
 
   return ref.current
 }
