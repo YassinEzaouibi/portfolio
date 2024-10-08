@@ -47,11 +47,12 @@ export default function Document() {
         />
         <link
           rel="alternate"
-          type="application/feed+json"
+          type="application/;+json"
           href={`${process.env.NEXT_PUBLIC_SITE_URL}/rss/feed.json`}
         />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
-      <body className="flex h-full flex-col bg-zinc-50 dark:bg-black">
+        <body className="flex h-full flex-col  dark:bg-zinc-900">
         <Main />
         <NextScript />
       </body>

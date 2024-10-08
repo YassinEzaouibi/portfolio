@@ -32,7 +32,6 @@ yarn-error.log*
 .vercel
 
 # files
-README.md
 
 # generated files
 /public/rss/

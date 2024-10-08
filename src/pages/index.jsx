@@ -1,8 +1,7 @@
-import Image from 'next/future/image'
+import Image from 'next/image'
 import Head from 'next/head'
 import Link from 'next/link'
-import clsx from 'clsx'
-
+import {Code, Database, FileJson, Globe, Palette, Server} from "lucide-react"
 import { Button } from '@/components/Button'
 import { Card } from '@/components/Card'
 import { Container } from '@/components/Container'
@@ -11,11 +10,6 @@ import {
   MediumIcon,
   LinkedInIcon,
 } from '@/components/SocialIcons'
-// import image1 from '@/images/photos/image-1.jpg'
-// import image2 from '@/images/photos/image-2.jpg'
-// import image3 from '@/images/photos/image-3.jpg'
-// import image4 from '@/images/photos/image-4.jpg'
-// import image5 from '@/images/photos/image-5.jpg'
 import logoIdaTech from '@/images/logos/idaTech.svg'
 import logoJobInTech from '@/images/logos/jobInTech.svg'
 import logoRedGato from '@/images/logos/redgato-favicon.svg'
@@ -82,6 +76,36 @@ function ArrowDownIcon(props) {
   )
 }
 
+const technologies = [
+  { name: "Java", icon: <Code className="w-6 h-6" /> },
+  { name: "Angular", icon: <Globe className="w-6 h-6" /> },
+  { name: "JavaScript", icon: <FileJson className="w-6 h-6" /> },
+  { name: "HTML5", icon: <Globe className="w-6 h-6" /> },
+  { name: "CSS3", icon: <Palette className="w-6 h-6" /> },
+  { name: "Node.js", icon: <Server className="w-6 h-6" /> },
+  { name: "MongoDB", icon: <Database className="w-6 h-6" /> },
+  { name: "SQL", icon: <Database className="w-6 h-6" /> },
+]
+function TechStackGrid() {
+  return (
+    <section className="bg-black py-12">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <h2 className="mb-8 text-2xl font-bold text-white">Technologies</h2>
+        <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 md:grid-cols-4">
+          {technologies.map((tech) => (
+            <div key={tech.name} className="flex flex-col items-center">
+              <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-gray-800 text-teal-400">
+                {tech.icon}
+              </div>
+              <span className="text-sm text-gray-300">{tech.name}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 function Article({ article }) {
   return (
     <Card as="article">
@@ -105,36 +129,37 @@ function SocialLink({ icon: Icon, ...props }) {
   )
 }
 
-// function Newsletter() {
-//   return (
-//     <form
-//       action="/thank-you"
-//       className="rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40"
-//     >
-//       <h2 className="flex text-sm font-semibold text-zinc-900 dark:text-zinc-100">
-//         <MailIcon className="h-6 w-6 flex-none" />
-//         <span className="ml-3">Stay up to date</span>
-//       </h2>
-//       <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-//         Get notified when I publish something new, and unsubscribe at any time.
-//       </p>
-//       <div className="mt-6 flex">
-//         <input
-//           type="email"
-//           placeholder="Email address"
-//           aria-label="Email address"
-//           required
-//           className="min-w-0 flex-auto appearance-none rounded-md border border-zinc-900/10 bg-white px-3 py-[calc(theme(spacing.2)-1px)] shadow-md shadow-zinc-800/5 placeholder:text-zinc-400 focus:border-teal-500 focus:outline-none focus:ring-4 focus:ring-teal-500/10 dark:border-zinc-700 dark:bg-zinc-700/[0.15] dark:text-zinc-200 dark:placeholder:text-zinc-500 dark:focus:border-teal-400 dark:focus:ring-teal-400/10 sm:text-sm"
-//         />
-//         <Button type="submit" className="ml-4 flex-none">
-//           Join
-//         </Button>
-//       </div>
-//     </form>
-//   )
-// }
+function Newsletter() {
+  return (
+    <form
+      action="/thank-you"
+      className="rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40"
+    >
+      <h2 className="flex text-sm font-semibold text-zinc-900 dark:text-zinc-100">
+        <MailIcon className="h-6 w-6 flex-none" />
+        <span className="ml-3">Stay up to date</span>
+      </h2>
+      <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+        Get notified when I publish something new, and unsubscribe at any time.
+      </p>
+      <div className="mt-6 flex">
+        <input
+          type="email"
+          placeholder="Email address"
+          aria-label="Email address"
+          required
+          className="min-w-0 flex-auto appearance-none rounded-md border border-zinc-900/10 bg-white px-3 py-[calc(theme(spacing.2)-1px)] shadow-md shadow-zinc-800/5 placeholder:text-zinc-400 focus:border-teal-500 focus:outline-none focus:ring-4 focus:ring-teal-500/10 dark:border-zinc-700 dark:bg-zinc-700/[0.15] dark:text-zinc-200 dark:placeholder:text-zinc-500 dark:focus:border-teal-400 dark:focus:ring-teal-400/10 sm:text-sm"
+        />
+        <Button type="submit" className="ml-4 flex-none">
+          Join
+        </Button>
+      </div>
+    </form>
+  )
+}
 
 function Resume() {
+
   let resume = [
     {
       company: 'IDEA TECH (Internship)',
@@ -144,11 +169,11 @@ function Resume() {
       start: '6-1-2024',
       end: '9-1-2024',
     },
-      {
+    {
       company: 'JobInTech - Simplon (Bootcamp)',
       title: 'Backend Developer (Java)',
-        type: 'Bootcamp',
-        logo: logoJobInTech,
+      type: 'Bootcamp',
+      logo: logoJobInTech,
       start: '12-4-2023',
       end: '5-9-2024',
     },
@@ -203,62 +228,48 @@ function Resume() {
           </li>
         ))}
       </ol>
-      <Button href="/yassin-ezaouibi-resume.pdf" variant="secondary" className="group mt-6 w-full">
+      {/*href="/yassin-ezaouibi-resume.pdf"*/}
+      {/*<Button*/}
+      {/*    variant="secondary"*/}
+      {/*    className="group mt-6 w-full" >*/}
+      {/*  Download CV*/}
+      {/*  <ArrowDownIcon className="h-4 w-4 stroke-zinc-400 transition group-active:stroke-zinc-600 dark:group-hover:stroke-zinc-50 dark:group-active:stroke-zinc-50" />*/}
+      {/*</Button>*/}
+      <Button
+        variant="secondary"
+        className="group mt-6 w-full"
+      >
         Download CV
-        <ArrowDownIcon className="h-4 w-4 stroke-zinc-400 transition group-active:stroke-zinc-600 dark:group-hover:stroke-zinc-50 dark:group-active:stroke-zinc-50" />
+        <ArrowDownIcon className="ml-2 h-4 w-4 stroke-zinc-400 transition group-active:stroke-zinc-600 dark:group-hover:stroke-zinc-50 dark:group-active:stroke-zinc-50" />
       </Button>
     </div>
   )
 }
-//
-// function Photos() {
-//   let rotations = ['rotate-2', '-rotate-2', 'rotate-2', 'rotate-2', '-rotate-2']
-//
-//   return (
-//     <div className="mt-16 sm:mt-20">
-//       <div className="-my-4 flex justify-center gap-5 overflow-hidden py-4 sm:gap-8">
-//         {[image1, image2, image3, image4, image5].map((image, imageIndex) => (
-//           <div
-//             key={image.src}
-//             className={clsx(
-//               'relative aspect-[9/10] w-44 flex-none overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-800 sm:w-72 sm:rounded-2xl',
-//               rotations[imageIndex % rotations.length]
-//             )}
-//           >
-//             <Image
-//               src={image}
-//               alt=""
-//               sizes="(min-width: 640px) 18rem, 11rem"
-//               className="absolute inset-0 h-full w-full object-cover"
-//             />
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   )
-// }
 
 export default function f({ articles }) {
   return (
     <>
       <Head>
-        <title>
-          Yassin Ezaouibi
-        </title>
+        <title>Yassin Ezaouibi</title>
         <meta
           name="description"
-          content="I’m Spencer, a software designer and entrepreneur based in New York City. I’m the founder and CEO of Planetaria, where we develop technologies that empower regular people to explore space on their own terms."
+          content="I’m Yassin Ezaouibi, a software Developer based in Casablanca."
         />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       <Container className="mt-9">
-        <div className="max-w-2xl">
-          <h1 className="text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl">
-            Full  Stack Developer, Java - Angular.
+        <div className="max-w-full">
+          <h1 className="text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl ">
+            Software Developer,
+            {/*<div className="mt-2 bg-gradient-to-r from-white via-red-600 to-green-600 bg-clip-text text-transparent">*/}
           </h1>
           <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
-            I’m Yassin Ezaouibi, a full-stack developer based in Al Hoceima Morocoo.
-            I specialize in creating scalable, high-performance web applications.
-            My passion lies in delivering seamless user experiences while building robust backend systems. I am committed to developing software solutions that empower businesses and individuals to thrive in the digital landscape.
+            I’m Yassin Ezaouibi, a software developer based in Casablanca
+            Morocco. I specialize in creating scalable, high-performance web
+            applications. My passion lies in delivering seamless user
+            experiences while building robust backend systems. I am committed to
+            developing software solutions that empower businesses and
+            individuals to thrive in the digital landscape.
           </p>
           <div className="mt-6 flex gap-6">
             <SocialLink
@@ -288,8 +299,9 @@ export default function f({ articles }) {
             ))}
           </div>
           <div className="space-y-10 lg:pl-16 xl:pl-24">
-            {/*<Newsletter />*/}
             <Resume />
+            <Newsletter />
+            {/*<TechStackGrid />*/}
           </div>
         </div>
       </Container>
