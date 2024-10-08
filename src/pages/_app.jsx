@@ -10,18 +10,21 @@ import {useRouter} from "next/router";
 
 function usePrevious(value) {
   let ref = useRef()
-  const router =useRouter();
 
   useEffect(() => {
     ref.current = value
-    if(!router.isReady) return;
-  }, [value, router.isReady])
+  }, [value])
 
   return ref.current
 }
 
-export default function App({ Component, pageProps, router }) {
+export default function App({ Component, pageProps }) {
+  const router =useRouter();
   let previousPathname = usePrevious(router.pathname)
+
+  useEffect(() => {
+    if(!router.isReady) return;
+  },[ router.isReady])
 
   return (
     <>
