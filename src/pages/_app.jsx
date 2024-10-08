@@ -65,12 +65,14 @@ function usePrevious(value) {
 }
 
 export default function App({ Component, pageProps }) {
-    const router = useRouter()
-    let previousPathname = usePrevious(router.pathname)
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const router = typeof window !== 'undefined' ? useRouter() : null // Only access router on the client
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    let previousPathname = router ? usePrevious(router.pathname) : null
 
     useEffect(() => {
-        if (!router.isReady) return
-    }, [router.isReady])
+        if (!router?.isReady) return
+    }, [router?.isReady])
 
     return (
         <>
