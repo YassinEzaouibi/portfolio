@@ -1,3 +1,4 @@
+/*
 import { useEffect, useRef } from 'react'
 
 import { Footer } from '@/components/Footer'
@@ -24,7 +25,7 @@ export default function App({ Component, pageProps, router }) {
     <>
       <div className="fixed inset-0 flex justify-center sm:px-8">
         <div className="flex w-full max-w-7xl lg:px-8">
-          {/*<div className="w-full bg-white ring-1 ring-red-100 dark:bg-zinc-900 dark:ring-zinc-300/20" />*/}
+          {/!*<div className="w-full bg-white ring-1 ring-red-100 dark:bg-zinc-900 dark:ring-zinc-300/20" />*!/}
           <div className="w-full bg-white dark:bg-zinc-900" />
         </div>
       </div>
@@ -37,5 +38,52 @@ export default function App({ Component, pageProps, router }) {
         <Footer />
       </div>
     </>
+  )
+}
+*/
+
+import {useEffect, useRef, useState} from 'react'
+import { Footer } from '@/components/Footer'
+import { Header } from '@/components/Header'
+import '@/styles/tailwind.css'
+import 'focus-visible'
+import { Analytics } from '@vercel/analytics/next'
+
+function usePrevious(value) {
+  const ref = useRef()
+  useEffect(() => {
+    ref.current = value
+  }, [value])
+  return ref.current
+}
+
+export default function App({ Component, pageProps, router }) {
+    const [isClient, setIsClient] = useState(false);
+    const previousPathname = usePrevious(router.pathname)
+
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
+
+    if(!isClient) {
+        return null;
+    }
+
+  return (
+      <>
+        <div className="fixed inset-0 flex justify-center sm:px-8">
+          <div className="flex w-full max-w-7xl lg:px-8">
+            <div className="w-full bg-white dark:bg-zinc-900" />
+          </div>
+        </div>
+        <div className="relative">
+          <Header />
+          <main aria-label="Main content">
+            <Analytics />
+            <Component previousPathname={previousPathname} {...pageProps} />
+          </main>
+          <Footer />
+        </div>
+      </>
   )
 }

@@ -137,7 +137,6 @@ function MobileNavigation(props) {
 
 function NavItem({ href, children }) {
   let isActive = useRouter().pathname === href
-
   return (
     <li>
       <Link

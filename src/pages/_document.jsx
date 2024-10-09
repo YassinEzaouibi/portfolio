@@ -1,3 +1,4 @@
+/*
 import { Head, Html, Main, NextScript } from 'next/document'
 
 const modeScript = `
@@ -40,16 +41,6 @@ export default function Document() {
     <Html className="h-full antialiased" lang="en">
       <Head>
         <script dangerouslySetInnerHTML={{ __html: modeScript }} />
-        <link
-          rel="alternate"
-          type="application/rss+xml"
-          href={`${process.env.NEXT_PUBLIC_SITE_URL}/rss/feed.xml`}
-        />
-        <link
-          rel="alternate"
-          type="application/;+json"
-          href={`${process.env.NEXT_PUBLIC_SITE_URL}/rss/feed.json`}
-        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
         <body className="flex h-full flex-col  dark:bg-zinc-900">
@@ -58,4 +49,43 @@ export default function Document() {
       </body>
     </Html>
   )
+}
+*/
+
+import { Head, Html, Main, NextScript } from 'next/document'
+
+const modeScript = `
+  const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+  const updateMode = () => {
+    const isSystemDarkMode = darkModeMediaQuery.matches;
+    const isDarkMode = window.localStorage.isDarkMode === 'true' || (!('isDarkMode' in window.localStorage) && isSystemDarkMode);
+    document.documentElement.classList.toggle('dark', isDarkMode);
+    if (isDarkMode === isSystemDarkMode) delete window.localStorage.isDarkMode;
+  };
+  const disableTransitionsTemporarily = () => {
+    document.documentElement.classList.add('[&_*]:!transition-none');
+    setTimeout(() => document.documentElement.classList.remove('[&_*]:!transition-none'), 0);
+  };
+  const updateModeWithoutTransitions = () => {
+    disableTransitionsTemporarily();
+    updateMode();
+  };
+  darkModeMediaQuery.addEventListener('change', updateModeWithoutTransitions);
+  window.addEventListener('storage', updateModeWithoutTransitions);
+  updateMode();
+`;
+
+export default function Document() {
+    return (
+        <Html className="h-full antialiased" lang="en">
+            <Head>
+                <script dangerouslySetInnerHTML={{ __html: modeScript }} />
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
+            <body className="flex h-full flex-col dark:bg-zinc-900">
+            <Main />
+            <NextScript />
+            </body>
+        </Html>
+    )
 }
