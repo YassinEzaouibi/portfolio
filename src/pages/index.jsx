@@ -345,6 +345,7 @@ import logoRedGato from '@/images/logos/redgato-favicon.svg'
 import { generateRssFeed } from '@/lib/generateRssFeed'
 import { getAllArticles } from '@/lib/getAllArticles'
 import { formatDate } from '@/lib/formatDate'
+import {useEffect} from "react";
 
 function MailIcon(props) {
   return (
@@ -435,6 +436,14 @@ function TechStackGrid() {
   )
 }
 
+function SocialLink({ icon: Icon, ...props }) {
+    return (
+        <Link className="group -m-1 p-1" {...props}>
+            <Icon className="h-6 w-6 fill-zinc-500 transition group-hover:fill-zinc-600 dark:fill-zinc-400 dark:group-hover:fill-zinc-300" />
+        </Link>
+    )
+}
+
 function Article({ article }) {
   return (
       <Card as="article">
@@ -447,14 +456,6 @@ function Article({ article }) {
         <Card.Description>{article.description}</Card.Description>
         <Card.Cta>Read article</Card.Cta>
       </Card>
-  )
-}
-
-function SocialLink({ icon: Icon, ...props }) {
-  return (
-      <Link className="group -m-1 p-1" {...props}>
-        <Icon className="h-6 w-6 fill-zinc-500 transition group-hover:fill-zinc-600 dark:fill-zinc-400 dark:group-hover:fill-zinc-300" />
-      </Link>
   )
 }
 
@@ -576,23 +577,10 @@ function Resume() {
 }
 
 
-export async function getStaticProps() {
-    if (process.env.NODE_ENV === 'production') {
-        await generateRssFeed()
-    }
-
-    return {
-        props: {
-            articles: (await getAllArticles())
-                .slice(0, 4)
-                .map(({ component, ...meta }) => meta),
-        },
-    }
-}
-
-
-
 export default function Home({ articles }) {
+    useEffect(() => {
+        // Any client-side only code can go here
+    }, [])
   return (
       <>
         <Head>
@@ -652,4 +640,18 @@ export default function Home({ articles }) {
         </Container>
       </>
   )
+}
+
+export async function getStaticProps() {
+    if (process.env.NODE_ENV === 'production') {
+        await generateRssFeed()
+    }
+
+    return {
+        props: {
+            articles: (await getAllArticles())
+                .slice(0, 4)
+                .map(({ component, ...meta }) => meta),
+        },
+    }
 }
