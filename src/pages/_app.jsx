@@ -31,7 +31,7 @@ export default function App({ Component, pageProps, router }) {
       <div className="relative">
         <Header />
         <main>
-          {/*<Analytics />*/}
+          <Analytics />
           <Component previousPathname={previousPathname} {...pageProps} />
         </main>
         <Footer />
