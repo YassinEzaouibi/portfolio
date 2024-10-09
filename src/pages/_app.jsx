@@ -42,7 +42,7 @@ export default function App({ Component, pageProps, router }) {
 }
 */
 
-import {useEffect, useRef, useState} from 'react'
+import {useEffect, useRef,} from 'react'
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
 import '@/styles/tailwind.css'
@@ -58,16 +58,7 @@ function usePrevious(value) {
 }
 
 export default function App({ Component, pageProps, router }) {
-    const [isClient, setIsClient] = useState(false);
     const previousPathname = usePrevious(router.pathname)
-
-    useEffect(() => {
-        setIsClient(true);
-    }, []);
-
-    if(!isClient) {
-        return null;
-    }
 
   return (
       <>

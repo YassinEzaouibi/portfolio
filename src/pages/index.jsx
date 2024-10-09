@@ -330,7 +330,9 @@ export async function getStaticProps() {
 import Image from 'next/image'
 import Head from 'next/head'
 import Link from 'next/link'
+
 import {Code, Database, FileJson, Globe, Palette, Server} from "lucide-react"
+
 import { Button } from '@/components/Button'
 import { Card } from '@/components/Card'
 import { Container } from '@/components/Container'
@@ -576,6 +578,21 @@ function Resume() {
   )
 }
 
+export async function getStaticProps() {
+  if (process.env.NODE_ENV === 'production') {
+    await generateRssFeed()
+  }
+
+  return {
+    props: {
+      articles: (await getAllArticles())
+          .slice(0, 4)
+          .map(({ component, ...meta }) => meta),
+    },
+  }
+}
+
+
 
 export default function Home({ articles }) {
     useEffect(() => {
@@ -642,16 +659,3 @@ export default function Home({ articles }) {
   )
 }
 
-export async function getStaticProps() {
-    if (process.env.NODE_ENV === 'production') {
-        await generateRssFeed()
-    }
-
-    return {
-        props: {
-            articles: (await getAllArticles())
-                .slice(0, 4)
-                .map(({ component, ...meta }) => meta),
-        },
-    }
-}

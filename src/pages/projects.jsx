@@ -3,6 +3,7 @@ import Head from 'next/head'
 
 import { Card } from '@/components/Card'
 import { SimpleLayout } from '@/components/SimpleLayout'
+
 import idaTech from '@/images/logos/idaTech.svg'
 import aqlam from '@/images/logos/aqlam.svg'
 import leetCode from '@/images/logos/leetCode.svg'
