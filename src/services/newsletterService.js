@@ -1,7 +1,8 @@
+let BASE_URL = 'http://localhost:5000';
 
-const subscribeUser = async (userData) => {
+export const subscribeUser = async (userData) => {
     try {
-        const response = await fetch('/api/subscribe', {
+        const response = await fetch(`${BASE_URL}/thank-you`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -9,15 +10,16 @@ const subscribeUser = async (userData) => {
             body: JSON.stringify(userData),
         });
 
+        const responseBody = await response.json();
+
         if (!response.ok) {
-            throw new Error('Failed to subscribe');
+            throw new Error(responseBody.message || 'Failed to subscribe');
         }
 
-        return await response.json(); // Assuming backend returns a success message
+        return responseBody;
     } catch (error) {
         console.error('Error:', error);
-        throw error; // Re-throw error to handle it in the component
+        throw error;
     }
 };
 
-export { subscribeUser };
