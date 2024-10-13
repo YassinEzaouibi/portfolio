@@ -22,7 +22,6 @@ import {useEffect} from "react";
 
 import { useState } from 'react'
 import {subscribeUser} from "@/services/newsletterService";
-import {redirect} from "next/navigation";
 import {useRouter} from "next/compat/router";
 
 function MailIcon(props) {
@@ -137,73 +136,6 @@ function Article({ article }) {
   )
 }
 
-//
-// function Newsletter() {
-//     const [name, setName] = useState('');
-//     const [email, setEmail] = useState('');
-//     const router = useRouter();
-//
-//     const handleSubmit = async (event) => {
-//         event.preventDefault()
-//         console.log(`Hello ${name}, this is your email: ${email}`)
-//         // eslint-disable-next-line react-hooks/rules-of-hooks
-//         try{
-//             await subscribeUser({name, email})
-//             router.push(`/thank-you?name=${encodeURIComponent(name)}`);
-//         } catch (error){
-//             alert("Subscription failed. Please try again")
-//         }
-//     }
-//     return (
-//         <form
-//             onSubmit={handleSubmit}
-//             className="rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40"
-//         >
-//             <h2 className="flex text-sm font-semibold text-zinc-900 dark:text-zinc-100">
-//                 <MailIcon className="h-6 w-6 flex-none" />
-//                 <span className="ml-3">Stay up to date</span>
-//             </h2>
-//             <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-//                 Get notified when I publish something new, and unsubscribe at any time.
-//             </p>
-//
-//             {/* Name Input */}
-//             <div className="mt-6 flex">
-//                 <input
-//                     type="text"
-//                     placeholder="Full name"
-//                     aria-label="Full name"
-//                     required
-//                     value={name}
-//                     onChange={(e) => setName(e.target.value)}
-//                     className="min-w-0 flex-auto appearance-none rounded-md border border-zinc-900/10 bg-white px-3 py-[calc(theme(spacing.2)-1px)] shadow-md shadow-zinc-800/5 placeholder:text-zinc-400 focus:border-teal-500 focus:outline-none focus:ring-4 focus:ring-teal-500/10 dark:border-zinc-700 dark:bg-zinc-700/[0.15] dark:text-zinc-200 dark:placeholder:text-zinc-500 dark:focus:border-teal-400 dark:focus:ring-teal-400/10 sm:text-sm"
-//                 />
-//             </div>
-//
-//             {/* Email Input */}
-//             <div className="mt-4 flex">
-//                 <input
-//                     type="email"
-//                     placeholder="Email address"
-//                     aria-label="Email address"
-//                     required
-//                     value={email}
-//                     onChange={(e) => setEmail(e.target.value)}
-//
-//                     className="min-w-0 flex-auto appearance-none rounded-md border border-zinc-900/10 bg-white px-3 py-[calc(theme(spacing.2)-1px)] shadow-md shadow-zinc-800/5 placeholder:text-zinc-400 focus:border-teal-500 focus:outline-none focus:ring-4 focus:ring-teal-500/10 dark:border-zinc-700 dark:bg-zinc-700/[0.15] dark:text-zinc-200 dark:placeholder:text-zinc-500 dark:focus:border-teal-400 dark:focus:ring-teal-400/10 sm:text-sm"
-//                 />
-//             </div>
-//
-//             {/* Submit Button */}
-//             <div className="mt-6 flex ">
-//                 <Button type="submit" className="w-full">
-//                     Join
-//                 </Button>
-//             </div>
-//         </form>
-//     );
-// }
-
 function Newsletter() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -257,13 +189,13 @@ function Newsletter() {
                     className="min-w-0 flex-auto appearance-none rounded-md border border-zinc-900/10 bg-white px-3 py-[calc(theme(spacing.2)-1px)] shadow-md shadow-zinc-800/5 placeholder:text-zinc-400 focus:border-teal-500 focus:outline-none focus:ring-4 focus:ring-teal-500/10 dark:border-zinc-700 dark:bg-zinc-700/[0.15] dark:text-zinc-200 dark:placeholder:text-zinc-500 dark:focus:border-teal-400 dark:focus:ring-teal-400/10 sm:text-sm"
                 />
             </div>
-
-            {/* Submit Button */}
-            <div className="mt-6 flex ">
-                <Button type="submit" className="w-full">
+                <Button
+                    type="submit"
+                    variant="secondary"
+                    className="group mt-6 w-full"
+                >
                     Join
                 </Button>
-            </div>
         </form>
     );
 }
