@@ -1,4 +1,3 @@
-// let BASE_URL = 'http://localhost:5000';
 let BASE_URL = 'https://port-back-o91c.onrender.com';
 
 export const subscribeUser = async (userData) => {

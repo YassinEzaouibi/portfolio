@@ -204,7 +204,7 @@ function Resume() {
 
   let resume = [
     {
-      company: 'IDEA TECH (Internship)',
+      company: 'IDEA TECH',
       title: 'Full Stack Developer (MERN)',
       type: 'Internship',
       logo: logoIdaTech,
@@ -212,20 +212,20 @@ function Resume() {
       end: '9-1-2024',
     },
     {
-      company: 'JobInTech - Simplon (Bootcamp)',
+      company: 'JobInTech - Simplon',
       title: 'Backend Developer (Java)',
       type: 'Bootcamp',
       logo: logoJobInTech,
       start: '12-4-2023',
-      end: '5-9-2024',
+      end: '6-1-2024',
     },
     {
-      company: 'redgato (Internship)',
+      company: 'redgato',
       title: 'Full Stack Developer (Java - Angular)',
       type: 'Internship',
       logo: logoRedGato,
-      start: '5-15-2023',
-      end: '9-8-2023',
+      start: '5-1-2023',
+      end: '10-1-2023',
     },
   ]
 
@@ -233,7 +233,7 @@ function Resume() {
       <div className="rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40">
         <h2 className="flex text-sm font-semibold text-zinc-900 dark:text-zinc-100">
           <BriefcaseIcon className="h-6 w-6 flex-none" />
-          <span className="ml-3">Internships and Bootcamps</span>
+          <span className="ml-3">Experiences</span>
         </h2>
         <ol className="mt-6 space-y-4">
           {resume.map((role, roleIndex) => (
@@ -271,12 +271,12 @@ function Resume() {
           ))}
         </ol>
         <Button
-            href="/yassin-ezaouibi-resume.pdf"
+            href = 'https://read.cv/yassinezaouibi'
+            target="_blank" rel="noopener noreferrer"
             variant="secondary"
             className="group mt-6 w-full"
         >
-          Download CV
-          <ArrowDownIcon className="ml-2 h-4 w-4 stroke-zinc-400 transition group-active:stroke-zinc-600 dark:group-hover:stroke-zinc-50 dark:group-active:stroke-zinc-50" />
+            Check out my CV
         </Button>
       </div>
   )
@@ -328,16 +328,19 @@ export default function Home({ articles }) {
             <div className="mt-6 flex gap-6">
               <SocialLink
                   href="https://github.com/YassinEzaouibi"
+                  target="_blank" rel="noopener noreferrer"
                   aria-label="Follow on GitHub"
                   icon={GitHubIcon}
               />
               <SocialLink
                   href="https://medium.com/@ezaouibiyassin"
+                  target="_blank" rel="noopener noreferrer"
                   aria-label="Follow on Medium"
                   icon={MediumIcon}
               />
               <SocialLink
                   href="https://www.linkedin.com/in/ezaouibi-yassin/"
+                  target="_blank" rel="noopener noreferrer"
                   aria-label="Follow on LinkedIn"
                   icon={LinkedInIcon}
               />

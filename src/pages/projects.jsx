@@ -1,12 +1,12 @@
 import Image from 'next/image'
 import Head from 'next/head'
+import Link from 'next/link'
 
 import { Card } from '@/components/Card'
 import { SimpleLayout } from '@/components/SimpleLayout'
 
 import idaTech from '@/images/logos/idaTech.svg'
 import aqlam from '@/images/logos/aqlam.svg'
-import leetCode from '@/images/logos/leetCode.svg'
 import labXpert from '@/images/logos/labXpert.svg'
 
 const projects = [
@@ -27,16 +27,16 @@ const projects = [
         },
         logo: aqlam,
     },
-    {
-        name: 'LeetCode Problems',
-        description:
-            'A collection of solutions to LeetCode problems that I\'ve solved. I try to add explanations and alternative solutions to help others learn.',
-        link: {
-            href: 'https://github.com/YassinEzaouibi/LeetCode_Problems',
-            label: 'LeetCode Problems'
-        },
-        logo: leetCode,
-    },
+    // {
+    //     name: 'LeetCode Problems',
+    //     description:
+    //         'A collection of solutions to LeetCode problems that I\'ve solved. I try to add explanations and alternative solutions to help others learn.',
+    //     link: {
+    //         href: 'https://github.com/YassinEzaouibi/LeetCode_Problems',
+    //         label: 'LeetCode Problems'
+    //     },
+    //     logo: leetCode,
+    // },
     {
         name: 'Lab Xpert',
         description:
@@ -116,6 +116,20 @@ export default function Projects() {
                         </Card>
                     ))}
                 </ul>
+                <h2
+                    className="mt-8 text-zinc-800 dark:text-zinc-100 italic underline underline-offset-2"
+                >
+                    Some Projects are not allow to publish by clients, if you want to see more,
+                    <Link
+                        href="/hire-me"
+                    >
+                        <span
+                            className="font-semibold"
+                        >
+                         {" "} Contact
+                        </span>
+                    </Link>
+                </h2>
             </SimpleLayout>
         </>
     )

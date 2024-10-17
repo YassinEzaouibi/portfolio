@@ -112,7 +112,7 @@ function MobileNavigation(props) {
             className="fixed inset-x-4 top-8 z-50 origin-top rounded-3xl bg-white p-8 ring-1 ring-zinc-900/5 dark:bg-zinc-900 dark:ring-zinc-800"
           >
             <div className="flex flex-row-reverse items-center justify-between">
-              <Popover.Button aria-label="Close menu" className="-m-1 p-1">
+              <Popover.Button aria-label="Close menu" clasContactsName="-m-1 p-1">
                 <CloseIcon className="h-6 w-6 text-zinc-500 dark:text-zinc-400" />
               </Popover.Button>
               <h2 className="text-sm font-medium text-zinc-600 dark:text-zinc-400">
@@ -125,7 +125,7 @@ function MobileNavigation(props) {
                 <MobileNavItem href="/articles">Articles</MobileNavItem>
                 <MobileNavItem href="/projects">Projects</MobileNavItem>
                 <MobileNavItem href="/tools">Tools</MobileNavItem>
-                <MobileNavItem href="/hire-me">Contact</MobileNavItem>
+                <MobileNavItem href="/hire-me">Hire Me</MobileNavItem>
               </ul>
             </nav>
           </Popover.Panel>
@@ -164,8 +164,13 @@ function DesktopNavigation(props) {
         <NavItem href="/about">About</NavItem>
         <NavItem href="/articles">Articles</NavItem>
         <NavItem href="/projects">Projects</NavItem>
-        <NavItem href="/tools">Tools</NavItem>
-        <NavItem href="/hire-me">Contact</NavItem>
+        <NavItem href="/tools">Tools </NavItem>
+        <NavItem href="/hire-me">
+          Hire
+          <div className="absolute -end-2 -top-2 inline-flex h-5 w-8 items-center justify-center rounded-full border-2 border-white bg-red-500 text-xs font-bold text-white dark:border-gray-900">
+            Me
+          </div>
+        </NavItem>
       </ul>
     </nav>
   )

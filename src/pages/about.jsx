@@ -86,16 +86,14 @@ export default function About() {
                 enhancing my expertise in both front-end and back-end development.
               </p>
               <p>
-                Recently, I completed a three-month internship at ID&A TECH,
-                where I contributed to several web development projects.
-                Under their supervision, I worked on both front-end and back-end
-                tasks, focusing on creating high-performance applications,
-                developing prototypes, and conducting rigorous testing to ensure
-                the quality and security of the final products. My work included
-                designing user interfaces using React, integrating RESTful APIs,
-                and managing databases with MongoDB. I also collaborated on
-                full-stack development using the MERN stack
-                (MongoDB, Express.js, React, Node.js).
+                Recently, I completed a three-month experience at IDEA TECH, where I
+                contributed to several web development projects. Under their supervision,
+                I worked on both front-end and back-end tasks, focusing on creating
+                high-performance applications, developing prototypes, and conducting
+                rigorous testing to ensure the quality and security of the final products.
+                My work included designing user interfaces using React, integrating RESTful
+                APIs, and managing databases with MongoDB. I also collaborated on
+                full-stack development using the MERN stack (MongoDB, Express.js, React, Node.js).
               </p>
               <p>
                 Today, I’m focused on combining creativity, adaptability, and
