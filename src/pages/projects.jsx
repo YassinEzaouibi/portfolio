@@ -116,20 +116,20 @@ export default function Projects() {
                         </Card>
                     ))}
                 </ul>
-                <h2
-                    className="mt-8 text-zinc-800 dark:text-zinc-100 italic underline underline-offset-2"
-                >
-                    Some Projects are not allow to publish by clients, if you want to see more,
-                    <Link
-                        href="/hire-me"
-                    >
-                        <span
-                            className="font-semibold"
-                        >
-                         {" "} Contact
-                        </span>
-                    </Link>
-                </h2>
+                {/*<h2*/}
+                {/*    className="mt-8 text-zinc-800 dark:text-zinc-100 italic underline underline-offset-2"*/}
+                {/*>*/}
+                {/*    Some Projects are not allow to publish by clients, if you want to see more,*/}
+                {/*    <Link*/}
+                {/*        href="/hire-me"*/}
+                {/*    >*/}
+                {/*        <span*/}
+                {/*            className="font-semibold"*/}
+                {/*        >*/}
+                {/*         {" "} Contact*/}
+                {/*        </span>*/}
+                {/*    </Link>*/}
+                {/*</h2>*/}
             </SimpleLayout>
         </>
     )

@@ -165,12 +165,12 @@ function DesktopNavigation(props) {
         <NavItem href="/articles">Articles</NavItem>
         <NavItem href="/projects">Projects</NavItem>
         <NavItem href="/tools">Tools </NavItem>
-        <NavItem href="/hire-me">
-          Hire
-          <div className="absolute -end-2 -top-2 inline-flex h-5 w-8 items-center justify-center rounded-full border-2 border-white bg-red-500 text-xs font-bold text-white dark:border-gray-900">
-            Me
-          </div>
-        </NavItem>
+        {/*<NavItem href="/hire-me">*/}
+        {/*  Hire*/}
+        {/*  <div className="absolute -end-2 -top-2 inline-flex h-5 w-8 items-center justify-center rounded-full border-2 border-white bg-red-500 text-xs font-bold text-white dark:border-gray-900">*/}
+        {/*    Me*/}
+        {/*  </div>*/}
+        {/*</NavItem>*/}
       </ul>
     </nav>
   )

@@ -15,6 +15,9 @@ import {
 import logoIdaTech from '@/images/logos/idaTech.svg'
 import logoJobInTech from '@/images/logos/jobInTech.svg'
 import logoRedGato from '@/images/logos/redgato-favicon.svg'
+import logoBts from '@/images/logos/bts.svg'
+import logoBac from '@/images/logos/bac.svg'
+import logoUmp from '@/images/logos/ump.svg'
 import { generateRssFeed } from '@/lib/generateRssFeed'
 import { getAllArticles } from '@/lib/getAllArticles'
 import { formatDate } from '@/lib/formatDate'
@@ -67,6 +70,34 @@ function BriefcaseIcon(props) {
             className="stroke-zinc-400 dark:stroke-zinc-500"
         />
       </svg>
+  )
+}
+
+function EducationIcon(props) {
+  return (
+       <svg
+          viewBox="0 0 16 16"
+          fill="none"
+          strokeWidth="1"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+          {...props}
+      >
+          <path
+              d="M16 6.28a1.23 1.23 0 0 0-.62-1.07l-6.74-4a1.27 1.27 0 0 0-1.28 0l-6.75 4a1.25 1.25 0 0 0 0 2.15l1.92 1.12v2.81a1.28 1.28 0 0 0 .62 1.09l4.25 2.45a1.28 1.28 0 0 0 1.24 0l4.25-2.45a1.28 1.28 0 0 0 .62-1.09V8.45l1.24-.73v2.72H16V6.28z"
+              className="fill-zinc-100 stroke-zinc-400 dark:fill-zinc-100/10 dark:stroke-zinc-500"
+          />
+          <path
+              d="M8 10.27l-6.75-4L8 2.26l6.75 4z"
+              className="fill-zinc-100 stroke-zinc-400 dark:fill-zinc-100/10 dark:stroke-zinc-500"
+          />
+          <path
+              d="M12.27 11.28L8 13.74 3.78 11.29V9.22l3.58 2.13a1.29 1.29 0 0 0 1.28 0l3.62-2.16z"
+              className="stroke-zinc-400 dark:stroke-zinc-500"
+          />
+      </svg>
+
   )
 }
 
@@ -282,6 +313,88 @@ function Resume() {
   )
 }
 
+function Education() {
+
+  let education = [
+    {
+      company: 'UMP - Faculté Pluridisciplinaire de Nador',
+      title: 'Mathématiques Appliquées a l\'Intelligence machine',
+      type: 'University',
+      logo: logoUmp,
+      start: '1-10-2024',
+      end: 'Currently',
+    },
+    {
+      company: 'Brevet de Technicien Supérieur (BTS).',
+      title: 'Développement de Systèmes D\'information.',
+      type: 'University',
+      logo: logoBts,
+      start: '1-9-2021',
+      end: '9-7-2023',
+    },
+    {
+      company: 'Baccalauréat ',
+      title: 'Science of life and earth',
+      type: 'Lycée',
+      logo: logoBac,
+      start: '1-9-2020',
+      end: '18-6-2021',
+    },
+  ]
+
+  return (
+      <div className="rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40">
+        <h2 className="flex text-sm font-semibold text-zinc-900 dark:text-zinc-100">
+          <EducationIcon className="h-6 w-6 flex-none" />
+          <span className="ml-3">Education</span>
+        </h2>
+        <ol className="mt-6 space-y-4">
+          {education.map((role, roleIndex) => (
+              <li key={roleIndex} className="flex gap-4">
+                <div className="relative mt-1 flex h-10 w-10 flex-none items-center justify-center rounded-full shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-zinc-800 dark:ring-0">
+                  <Image src={role.logo} alt="" className="h-7 w-7" unoptimized />
+                </div>
+                <dl className="flex flex-auto flex-wrap gap-x-2">
+                  <dt className="sr-only">Company</dt>
+                  <dd className="w-full flex-none text-sm font-medium text-zinc-900 dark:text-zinc-100">
+                    {role.company}
+                  </dd>
+                  <dt className="sr-only">Role</dt>
+                  <dd className="text-xs text-zinc-500 dark:text-zinc-400">
+                    {role.title}
+                  </dd>
+
+                  <dt className="sr-only">Date</dt>
+                  <dd
+                      className="ml-auto text-xs text-zinc-400 dark:text-zinc-500"
+                      aria-label={`${role.start.label ?? role.start} until ${
+                          role.end.label ?? role.end
+                      }`}
+                  >
+                    <time dateTime={role.start.dateTime ?? role.start}>
+                      {role.start.label ?? role.start}
+                    </time>{' '}
+                    <span aria-hidden="true">—</span>{' '}
+                    <time dateTime={role.end.dateTime ?? role.end}>
+                      {role.end.label ?? role.end}
+                    </time>
+                  </dd>
+                </dl>
+              </li>
+          ))}
+        </ol>
+        {/*<Button*/}
+        {/*    href = 'https://read.cv/yassinezaouibi'*/}
+        {/*    target="_blank" rel="noopener noreferrer"*/}
+        {/*    variant="secondary"*/}
+        {/*    className="group mt-6 w-full"*/}
+        {/*>*/}
+        {/*    Check out my CV*/}
+        {/*</Button>*/}
+      </div>
+  )
+}
+
 export async function getStaticProps() {
   if (process.env.NODE_ENV === 'production') {
     await generateRssFeed()
@@ -315,15 +428,14 @@ export default function Home({ articles }) {
         <Container className="mt-9">
           <div className="max-w-full">
             <h1 className="text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl ">
-              Software Developer,
+              Machine Learning Student,
             </h1>
             <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
-              I’m Yassin Ezaouibi, a software developer based in Casablanca
-              Morocco. I specialize in creating scalable, high-performance web
-              applications. My passion lies in delivering seamless user
-              experiences while building robust backend systems. I am committed to
-              developing software solutions that empower businesses and
-              individuals to thrive in the digital landscape.
+                I’m Yassin Ezaouibi, a Machine Learning Student. With a background in software development,
+                I am currently pursuing a degree in Applied Mathematics for Machine Intelligence at UMP.
+                Passionate about leveraging data and advanced algorithms to solve complex problems,
+                I also enjoy sharing insights through writing articles on AI. Committed to continuous learning,
+                I aim to develop innovative solutions that empower businesses and individuals to thrive in the digital landscape.
             </p>
             <div className="mt-6 flex gap-6">
               <SocialLink
@@ -357,7 +469,8 @@ export default function Home({ articles }) {
             </div>
             <div className="space-y-10 lg:pl-16 xl:pl-24">
               <Resume />
-              <Newsletter />
+              <Education />
+              {/*<Newsletter />*/}
               {/*<TechStackGrid />*/}
             </div>
           </div>

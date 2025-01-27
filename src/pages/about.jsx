@@ -60,50 +60,29 @@ export default function About() {
           </div>
           <div className="lg:order-first lg:row-span-2">
             <h1 className="text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl">
-              I’m Yassin Ezaouibi, a full-stack developer from Casablanca, Morocco.
+              I’m Yassin Ezaouibi, a Machine Learning Student from Morocco.
             </h1>
             <div className="mt-6 space-y-7 text-base text-zinc-600 dark:text-zinc-400">
               <p>
-                with a passion for creating powerful and intuitive web applications.
-                From an early age, I was fascinated by how things work, and my
-                love for technology started with a high school interest in programming.
-                {/* eslint-disable-next-line react/no-unescaped-entities */}
-                It didn't take long for me to start building small projects, fueled by
-                the curiosity that has continued to drive my career.
+                <span className="italic font-bold text-xl text-zinc-600 dark:text-zinc-200">My Journey</span><br/>
+                I’ve always loved turning ideas into reality through technology. Starting with simple projects in high school, I discovered a passion for building tools that solve real problems. Over time, I shifted from science to software development, where creativity meets logic, and never looked back.
               </p>
               <p>
-                While I initially studied the sciences, it was in web development that
-                I found my calling. In 2023, during an internship at Redgato, I contributed
-                to platforms like Dentalix, which streamlines the ordering process for
-                dentists, and Anomalia, an anomaly detection system for water dams
-                utilizing AI. This experience gave me the opportunity to dive deep into
-                full-stack web development, particularly with Java Spring Boot and Angular.
+                <span className="italic font-bold text-xl text-zinc-600 dark:text-zinc-200">Building Solutions</span><br/>
+                My work revolves around creating user-friendly web applications that are both powerful and reliable. I enjoy designing smooth experiences for users while ensuring the systems behind them are strong and secure. From crafting interfaces to connecting data and services, every step excites me.
+
               </p>
               <p>
-                Following this, I completed a structured bootcamp program that allowed
-                me to sharpen my technical skills and develop over 10 concrete web projects.
-                Through this training, I specialized in Java Spring Boot and Angular,
-                enhancing my expertise in both front-end and back-end development.
+                <span className="italic font-bold text-xl text-zinc-600 dark:text-zinc-200">Exploring New Frontiers</span><br />
+                Today, I’m diving into the world of artificial intelligence and machine learning. I’m fascinated by how data and smart algorithms can tackle complex challenges, and I write about these topics to share ideas and inspire others. This journey reflects my belief that learning never stops—whether through coding, writing, or experimenting with new technologies.
               </p>
+
               <p>
-                Recently, I completed a three-month experience at IDEA TECH, where I
-                contributed to several web development projects. Under their supervision,
-                I worked on both front-end and back-end tasks, focusing on creating
-                high-performance applications, developing prototypes, and conducting
-                rigorous testing to ensure the quality and security of the final products.
-                My work included designing user interfaces using React, integrating RESTful
-                APIs, and managing databases with MongoDB. I also collaborated on
-                full-stack development using the MERN stack (MongoDB, Express.js, React, Node.js).
+                <span className="italic font-bold text-xl text-zinc-600 dark:text-zinc-200"> Looking Ahead</span><br/>
+                My goal is to keep creating tools that make a difference. I want to blend creativity with problem-solving to help people and businesses succeed in a fast-changing digital world. Every project is a chance to learn, grow, and push what’s possible.
+
               </p>
-              <p>
-                Today, I’m focused on combining creativity, adaptability, and
-                strong technical skills in languages like Java, TypeScript, and
-                frameworks like Spring and Angular, to build the next generation
-                of applications. My recent experiences have deepened my
-                knowledge, and I’m committed to pushing the boundaries of
-                web technology to continue contributing to meaningful,
-                cutting-edge projects.
-              </p>
+
             </div>
           </div>
           <div className="lg:pl-20">
