@@ -124,8 +124,8 @@ function MobileNavigation(props) {
                 <MobileNavItem href="/about">About</MobileNavItem>
                 <MobileNavItem href="/articles">Articles</MobileNavItem>
                 <MobileNavItem href="/projects">Projects</MobileNavItem>
+                <MobileNavItem href="/skills">Skills</MobileNavItem>
                 <MobileNavItem href="/tools">Tools</MobileNavItem>
-                <MobileNavItem href="/hire-me">Hire Me</MobileNavItem>
               </ul>
             </nav>
           </Popover.Panel>
@@ -144,13 +144,13 @@ function NavItem({ href, children }) {
         className={clsx(
           'relative block px-3 py-2 transition',
           isActive
-            ? 'text-teal-500 dark:text-teal-400'
-            : 'hover:text-teal-500 dark:hover:text-teal-400'
+            ? 'text-amber-500 dark:text-amber-400'
+            : 'hover:text-amber-500 dark:hover:text-amber-400'
         )}
       >
         {children}
         {isActive && (
-          <span className="absolute inset-x-1 -bottom-px h-px bg-gradient-to-r from-teal-500/0 via-teal-500/40 to-teal-500/0 dark:from-teal-400/0 dark:via-teal-400/40 dark:to-teal-400/0" />
+          <span className="absolute inset-x-1 -bottom-px h-px bg-gradient-to-r from-amber-500/0 via-amber-500/40 to-amber-500/0 dark:from-amber-400/0 dark:via-amber-400/40 dark:to-amber-400/0" />
         )}
       </Link>
     </li>
@@ -164,13 +164,8 @@ function DesktopNavigation(props) {
         <NavItem href="/about">About</NavItem>
         <NavItem href="/articles">Articles</NavItem>
         <NavItem href="/projects">Projects</NavItem>
-        <NavItem href="/tools">Tools </NavItem>
-        {/*<NavItem href="/hire-me">*/}
-        {/*  Hire*/}
-        {/*  <div className="absolute -end-2 -top-2 inline-flex h-5 w-8 items-center justify-center rounded-full border-2 border-white bg-red-500 text-xs font-bold text-white dark:border-gray-900">*/}
-        {/*    Me*/}
-        {/*  </div>*/}
-        {/*</NavItem>*/}
+        <NavItem href="/skills">Skills</NavItem>
+        <NavItem href="/tools">Tools</NavItem>
       </ul>
     </nav>
   )
@@ -256,11 +251,9 @@ export function Header() {
   let isHomePage = useRouter().pathname === '/'
 
   let headerRef = useRef()
-  let avatarRef = useRef()
   let isInitial = useRef(true)
 
   useEffect(() => {
-    let downDelay = avatarRef.current?.offsetTop ?? 0
     let upDelay = 64
 
     function setProperty(property, value) {
@@ -283,11 +276,11 @@ export function Header() {
         setProperty('--header-position', 'sticky')
       }
 
-      setProperty('--content-offset', `${downDelay}px`)
+      setProperty('--content-offset', `0px`)
 
-      if (isInitial.current || scrollY < downDelay) {
-        setProperty('--header-height', `${downDelay + height}px`)
-        setProperty('--header-mb', `${-downDelay}px`)
+      if (isInitial.current || scrollY < 0) {
+        setProperty('--header-height', `${height}px`)
+        setProperty('--header-mb', `0px`)
       } else if (top + height < -upDelay) {
         let offset = Math.max(height, scrollY - upDelay)
         setProperty('--header-height', `${offset}px`)
@@ -297,51 +290,17 @@ export function Header() {
         setProperty('--header-mb', `${-scrollY}px`)
       }
 
-      if (top === 0 && scrollY > 0 && scrollY >= downDelay) {
+      if (top === 0 && scrollY > 0) {
         setProperty('--header-inner-position', 'fixed')
         removeProperty('--header-top')
-        removeProperty('--avatar-top')
       } else {
         removeProperty('--header-inner-position')
         setProperty('--header-top', '0px')
-        setProperty('--avatar-top', '0px')
       }
-    }
-
-    function updateAvatarStyles() {
-      if (!isHomePage) {
-        return
-      }
-
-      let fromScale = 1
-      let toScale = 36 / 64
-      let fromX = 0
-      let toX = 2 / 16
-
-      let scrollY = downDelay - window.scrollY
-
-      let scale = (scrollY * (fromScale - toScale)) / downDelay + toScale
-      scale = clamp(scale, fromScale, toScale)
-
-      let x = (scrollY * (fromX - toX)) / downDelay + toX
-      x = clamp(x, fromX, toX)
-
-      setProperty(
-        '--avatar-image-transform',
-        `translate3d(${x}rem, 0, 0) scale(${scale})`
-      )
-
-      let borderScale = 1 / (toScale / scale)
-      let borderX = (-toX + x) * borderScale
-      let borderTransform = `translate3d(${borderX}rem, 0, 0) scale(${borderScale})`
-
-      setProperty('--avatar-border-transform', borderTransform)
-      setProperty('--avatar-border-opacity', scale === toScale ? 1 : 0)
     }
 
     function updateStyles() {
       updateHeaderStyles()
-      updateAvatarStyles()
       isInitial.current = false
     }
 
@@ -350,7 +309,7 @@ export function Header() {
     window.addEventListener('resize', updateStyles)
 
     return () => {
-      window.removeEventListener('scroll', updateStyles, { passive: true })
+      window.removeEventListener('scroll', updateStyles)
       window.removeEventListener('resize', updateStyles)
     }
   }, [isHomePage])
@@ -364,38 +323,6 @@ export function Header() {
           marginBottom: 'var(--header-mb)',
         }}
       >
-        {isHomePage && (
-          <>
-            <div
-              ref={avatarRef}
-              className="order-last mt-[calc(theme(spacing.16)-theme(spacing.3))]"
-            />
-            <Container
-              className="top-0 order-last -mb-3 pt-3"
-              style={{ position: 'var(--header-position)' }}
-            >
-              <div
-                className="top-[var(--avatar-top,theme(spacing.3))] w-full"
-                style={{ position: 'var(--header-inner-position)' }}
-              >
-                <div className="relative">
-                  <AvatarContainer
-                    className="absolute left-0 top-3 origin-left transition-opacity"
-                    style={{
-                      opacity: 'var(--avatar-border-opacity, 0)',
-                      transform: 'var(--avatar-border-transform)',
-                    }}
-                  />
-                  <Avatar
-                    large
-                    className="block h-16 w-16 origin-left"
-                    style={{ transform: 'var(--avatar-image-transform)' }}
-                  />
-                </div>
-              </div>
-            </Container>
-          </>
-        )}
         <div
           ref={headerRef}
           className="top-0 z-10 h-16 pt-6"
@@ -406,17 +333,24 @@ export function Header() {
             style={{ position: 'var(--header-inner-position)' }}
           >
             <div className="relative flex gap-4">
+              {/* Left: home monogram link (shown on all pages) */}
               <div className="flex flex-1">
-                {!isHomePage && (
-                  <AvatarContainer>
-                    <Avatar />
-                  </AvatarContainer>
-                )}
+                <Link
+                  href="/"
+                  aria-label="Home"
+                  className="pointer-events-auto flex items-center gap-2 font-mono text-sm font-bold tracking-tight text-zinc-800 dark:text-zinc-100 transition hover:text-amber-500 dark:hover:text-amber-400"
+                >
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-zinc-900 dark:bg-zinc-100 text-zinc-100 dark:text-zinc-900 text-xs font-black">
+                    YE
+                  </span>
+                </Link>
               </div>
+              {/* Centre: navigation */}
               <div className="flex flex-1 justify-end md:justify-center">
                 <MobileNavigation className="pointer-events-auto md:hidden" />
                 <DesktopNavigation className="pointer-events-auto hidden md:block" />
               </div>
+              {/* Right: theme toggle */}
               <div className="flex justify-end md:flex-1">
                 <div className="pointer-events-auto">
                   <ModeToggle />
@@ -426,7 +360,6 @@ export function Header() {
           </Container>
         </div>
       </header>
-      {isHomePage && <div style={{ height: 'var(--content-offset)' }} />}
     </>
   )
 }

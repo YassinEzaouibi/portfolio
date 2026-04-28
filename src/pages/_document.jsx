@@ -43,7 +43,7 @@ export default function Document() {
         <script dangerouslySetInnerHTML={{ __html: modeScript }} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-        <body className="flex h-full flex-col  dark:bg-zinc-900">
+        <body className="flex h-full flex-col bg-zinc-100 dark:bg-zinc-950">
         <Main />
         <NextScript />
       </body>
@@ -82,7 +82,7 @@ export default function Document() {
                 <script dangerouslySetInnerHTML={{ __html: modeScript }} />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <body className="flex h-full flex-col dark:bg-zinc-900">
+            <body className="flex h-full flex-col bg-zinc-100 dark:bg-zinc-950">
             <Main />
             <NextScript />
             </body>

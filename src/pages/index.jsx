@@ -2,8 +2,6 @@ import Image from 'next/image'
 import Head from 'next/head'
 import Link from 'next/link'
 
-import {Code, Database, FileJson, Globe, Palette, Server} from "lucide-react"
-
 import { Button } from '@/components/Button'
 import { Card } from '@/components/Card'
 import { Container } from '@/components/Container'
@@ -12,388 +10,285 @@ import {
   MediumIcon,
   LinkedInIcon,
 } from '@/components/SocialIcons'
-import logoIdaTech from '@/images/logos/idaTech.svg'
-import logoJobInTech from '@/images/logos/jobInTech.svg'
-import logoRedGato from '@/images/logos/redgato-favicon.svg'
-import logoBts from '@/images/logos/bts.svg'
-import logoBac from '@/images/logos/bac.svg'
-import logoUmp from '@/images/logos/ump.svg'
+
 import { generateRssFeed } from '@/lib/generateRssFeed'
 import { getAllArticles } from '@/lib/getAllArticles'
 import { formatDate } from '@/lib/formatDate'
-import {useEffect} from "react";
+import { useEffect, useState, useRef } from 'react'
 
-import { useState } from 'react'
-import {subscribeUser} from "@/services/newsletterService";
-import {useRouter} from "next/compat/router";
+import { subscribeUser } from '@/services/newsletterService'
+import { useRouter } from 'next/compat/router'
+
+import { personalInfo, experience, education, skills } from '@/data/info'
+
+// ─── Icons ───────────────────────────────────────────────────────────────────
 
 function MailIcon(props) {
   return (
-      <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden="true"
-          {...props}
-      >
-        <path
-            d="M2.75 7.75a3 3 0 0 1 3-3h12.5a3 3 0 0 1 3 3v8.5a3 3 0 0 1-3 3H5.75a3 3 0 0 1-3-3v-8.5Z"
-            className="fill-zinc-100 stroke-zinc-400 dark:fill-zinc-100/10 dark:stroke-zinc-500"
-        />
-        <path
-            d="m4 6 6.024 5.479a2.915 2.915 0 0 0 3.952 0L20 6"
-            className="stroke-zinc-400 dark:stroke-zinc-500"
-        />
-      </svg>
+    <svg viewBox="0 0 24 24" fill="none" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>
+      <path d="M2.75 7.75a3 3 0 0 1 3-3h12.5a3 3 0 0 1 3 3v8.5a3 3 0 0 1-3 3H5.75a3 3 0 0 1-3-3v-8.5Z" className="fill-zinc-100 stroke-zinc-400 dark:fill-zinc-100/10 dark:stroke-zinc-500" />
+      <path d="m4 6 6.024 5.479a2.915 2.915 0 0 0 3.952 0L20 6" className="stroke-zinc-400 dark:stroke-zinc-500" />
+    </svg>
   )
 }
 
 function BriefcaseIcon(props) {
   return (
-      <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden="true"
-          {...props}
-      >
-        <path
-            d="M2.75 9.75a3 3 0 0 1 3-3h12.5a3 3 0 0 1 3 3v8.5a3 3 0 0 1-3 3H5.75a3 3 0 0 1-3-3v-8.5Z"
-            className="fill-zinc-100 stroke-zinc-400 dark:fill-zinc-100/10 dark:stroke-zinc-500"
-        />
-        <path
-            d="M3 14.25h6.249c.484 0 .952-.002 1.316.319l.777.682a.996.996 0 0 0 1.316 0l.777-.682c.364-.32.832-.319 1.316-.319H21M8.75 6.5V4.75a2 2 0 0 1 2-2h2.5a2 2 0 0 1 2 2V6.5"
-            className="stroke-zinc-400 dark:stroke-zinc-500"
-        />
-      </svg>
+    <svg viewBox="0 0 24 24" fill="none" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>
+      <path d="M2.75 9.75a3 3 0 0 1 3-3h12.5a3 3 0 0 1 3 3v8.5a3 3 0 0 1-3 3H5.75a3 3 0 0 1-3-3v-8.5Z" className="fill-zinc-100 stroke-zinc-400 dark:fill-zinc-100/10 dark:stroke-zinc-500" />
+      <path d="M3 14.25h6.249c.484 0 .952-.002 1.316.319l.777.682a.996.996 0 0 0 1.316 0l.777-.682c.364-.32.832-.319 1.316-.319H21M8.75 6.5V4.75a2 2 0 0 1 2-2h2.5a2 2 0 0 1 2 2V6.5" className="stroke-zinc-400 dark:stroke-zinc-500" />
+    </svg>
   )
 }
 
 function EducationIcon(props) {
   return (
-       <svg
-          viewBox="0 0 16 16"
-          fill="none"
-          strokeWidth="1"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden="true"
-          {...props}
-      >
-          <path
-              d="M16 6.28a1.23 1.23 0 0 0-.62-1.07l-6.74-4a1.27 1.27 0 0 0-1.28 0l-6.75 4a1.25 1.25 0 0 0 0 2.15l1.92 1.12v2.81a1.28 1.28 0 0 0 .62 1.09l4.25 2.45a1.28 1.28 0 0 0 1.24 0l4.25-2.45a1.28 1.28 0 0 0 .62-1.09V8.45l1.24-.73v2.72H16V6.28z"
-              className="fill-zinc-100 stroke-zinc-400 dark:fill-zinc-100/10 dark:stroke-zinc-500"
-          />
-          <path
-              d="M8 10.27l-6.75-4L8 2.26l6.75 4z"
-              className="fill-zinc-100 stroke-zinc-400 dark:fill-zinc-100/10 dark:stroke-zinc-500"
-          />
-          <path
-              d="M12.27 11.28L8 13.74 3.78 11.29V9.22l3.58 2.13a1.29 1.29 0 0 0 1.28 0l3.62-2.16z"
-              className="stroke-zinc-400 dark:stroke-zinc-500"
-          />
-      </svg>
-
+    <svg viewBox="0 0 16 16" fill="none" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>
+      <path d="M16 6.28a1.23 1.23 0 0 0-.62-1.07l-6.74-4a1.27 1.27 0 0 0-1.28 0l-6.75 4a1.25 1.25 0 0 0 0 2.15l1.92 1.12v2.81a1.28 1.28 0 0 0 .62 1.09l4.25 2.45a1.28 1.28 0 0 0 1.24 0l4.25-2.45a1.28 1.28 0 0 0 .62-1.09V8.45l1.24-.73v2.72H16V6.28z" className="fill-zinc-100 stroke-zinc-400 dark:fill-zinc-100/10 dark:stroke-zinc-500" />
+      <path d="M8 10.27l-6.75-4L8 2.26l6.75 4z" className="fill-zinc-100 stroke-zinc-400 dark:fill-zinc-100/10 dark:stroke-zinc-500" />
+      <path d="M12.27 11.28L8 13.74 3.78 11.29V9.22l3.58 2.13a1.29 1.29 0 0 0 1.28 0l3.62-2.16z" className="stroke-zinc-400 dark:stroke-zinc-500" />
+    </svg>
   )
 }
 
 function ArrowDownIcon(props) {
   return (
-      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true" {...props}>
-        <path
-            d="M4.75 8.75 8 12.25m0 0 3.25-3.5M8 12.25v-8.5"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        />
-      </svg>
+    <svg viewBox="0 0 16 16" fill="none" aria-hidden="true" {...props}>
+      <path d="M4.75 8.75 8 12.25m0 0 3.25-3.5M8 12.25v-8.5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
   )
 }
 
-const technologies = [
-  { name: "Java", icon: <Code className="w-6 h-6" /> },
-  { name: "Angular", icon: <Globe className="w-6 h-6" /> },
-  { name: "JavaScript", icon: <FileJson className="w-6 h-6" /> },
-  { name: "HTML5", icon: <Globe className="w-6 h-6" /> },
-  { name: "CSS3", icon: <Palette className="w-6 h-6" /> },
-  { name: "Node.js", icon: <Server className="w-6 h-6" /> },
-  { name: "MongoDB", icon: <Database className="w-6 h-6" /> },
-  { name: "SQL", icon: <Database className="w-6 h-6" /> },
-]
-function TechStackGrid() {
+function DownloadIcon(props) {
   return (
-      <section className="bg-black py-12">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <h2 className="mb-8 text-2xl font-bold text-white">Technologies</h2>
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 md:grid-cols-4">
-            {technologies.map((tech) => (
-                <div key={tech.name} className="flex flex-col items-center">
-                  <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-gray-800 text-teal-400">
-                    {tech.icon}
-                  </div>
-                  <span className="text-sm text-gray-300">{tech.name}</span>
-                </div>
-            ))}
-          </div>
-        </div>
-      </section>
+    <svg viewBox="0 0 24 24" fill="none" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>
+      <path d="M12 3v12m0 0l-4-4m4 4l4-4M3 18h18" stroke="currentColor" />
+    </svg>
   )
 }
+
+// ─── Typing Animation ─────────────────────────────────────────────────────────
+
+function TypingRole({ variants }) {
+  const [displayText, setDisplayText] = useState('')
+  const [variantIndex, setVariantIndex] = useState(0)
+  const [isDeleting, setIsDeleting] = useState(false)
+  const [isPaused, setIsPaused] = useState(false)
+
+  useEffect(() => {
+    const current = variants[variantIndex]
+    let timeout
+
+    if (isPaused) {
+      timeout = setTimeout(() => {
+        setIsPaused(false)
+        setIsDeleting(true)
+      }, 1800)
+      return () => clearTimeout(timeout)
+    }
+
+    if (!isDeleting && displayText === current) {
+      setIsPaused(true)
+      return
+    }
+
+    if (isDeleting && displayText === '') {
+      setIsDeleting(false)
+      setVariantIndex((i) => (i + 1) % variants.length)
+      return
+    }
+
+    const speed = isDeleting ? 40 : 70
+    timeout = setTimeout(() => {
+      setDisplayText(isDeleting
+        ? current.slice(0, displayText.length - 1)
+        : current.slice(0, displayText.length + 1)
+      )
+    }, speed)
+
+    return () => clearTimeout(timeout)
+  }, [displayText, isDeleting, isPaused, variantIndex, variants])
+
+  return (
+    <span className="text-amber-600 dark:text-amber-400">
+      {displayText}
+      <span className="ml-0.5 inline-block w-0.5 h-[0.85em] bg-amber-600 dark:bg-amber-400 align-middle animate-pulse" />
+    </span>
+  )
+}
+
+// ─── Availability Badge ───────────────────────────────────────────────────────
+
+function AvailabilityBadge() {
+  return (
+    <span className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700 dark:border-emerald-800/40 dark:bg-emerald-900/20 dark:text-emerald-400">
+      <span className="relative flex h-2 w-2">
+        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+        <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+      </span>
+      Open to PFE Internship · Feb 2027
+    </span>
+  )
+}
+
+// ─── Stats Bar ────────────────────────────────────────────────────────────────
+
+const stats = [
+  { label: 'Internships', value: '4+' },
+  { label: 'AI Articles', value: '2' },
+  { label: 'Core Stack', value: 'Python · PyTorch · Sklearn' },
+  { label: 'Target', value: 'PFE Feb 2027' },
+]
+
+function StatsBar() {
+  return (
+    <div className="mt-12 rounded-2xl border border-zinc-100 bg-zinc-50/50 dark:border-zinc-700/40 dark:bg-zinc-800/30 px-6 py-4">
+      <dl className="flex flex-wrap gap-x-10 gap-y-4">
+        {stats.map((s) => (
+          <div key={s.label}>
+            <dt className="text-xs text-zinc-500 dark:text-zinc-400 uppercase tracking-wide">{s.label}</dt>
+            <dd className="mt-0.5 text-sm font-semibold text-zinc-800 dark:text-zinc-100">{s.value}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  )
+}
+
+// ─── Stat Cards ──────────────────────────────────────────────────────────────
+
+const statCards = [
+  { value: '4+',       label: 'Internships' },
+  { value: '6 mo',     label: 'AI Research' },
+  { value: '3+',       label: 'AI Projects' },
+  { value: 'Feb 2027', label: 'PFE Target'  },
+]
+
+function StatCards() {
+  return (
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8">
+      {statCards.map((s) => (
+        <div
+          key={s.label}
+          className="group flex flex-col items-center justify-center rounded-xl border border-amber-400/20 bg-white/40 dark:bg-zinc-900/40 backdrop-blur-md px-4 py-4 transition-all duration-300 hover:scale-[1.03] hover:-translate-y-1 hover:shadow-xl hover:shadow-amber-500/10 hover:border-amber-400/40"
+        >
+          <span className="font-mono text-xl font-bold text-amber-600 dark:text-amber-400">{s.value}</span>
+          <span className="mt-1 text-xs uppercase tracking-widest text-zinc-500 dark:text-zinc-400">{s.label}</span>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+
+// ─── Social Link ──────────────────────────────────────────────────────────────
 
 function SocialLink({ icon: Icon, ...props }) {
-    return (
-        <Link className="group -m-1 p-1" {...props}>
-            <Icon className="h-6 w-6 fill-zinc-500 transition group-hover:fill-zinc-600 dark:fill-zinc-400 dark:group-hover:fill-zinc-300" />
-        </Link>
-    )
+  return (
+    <Link className="group -m-1 p-1" {...props}>
+      <Icon className="h-6 w-6 fill-zinc-400 transition group-hover:fill-amber-400" />
+    </Link>
+  )
 }
+
+// ─── Article Card ─────────────────────────────────────────────────────────────
 
 function Article({ article }) {
   return (
-      <Card as="article">
-        <Card.Title href={`/articles/${article.slug}`}>
-          {article.title}
-        </Card.Title>
-        <Card.Eyebrow as="time" dateTime={article.date} decorate>
-          {formatDate(article.date)}
-        </Card.Eyebrow>
-        <Card.Description>{article.description}</Card.Description>
-        <Card.Cta>Read article</Card.Cta>
-      </Card>
+    <Card as="article">
+      <Card.Title href={`/articles/${article.slug}`}>
+        {article.title}
+      </Card.Title>
+      <Card.Eyebrow as="time" dateTime={article.date} decorate>
+        {formatDate(article.date)}
+      </Card.Eyebrow>
+      <Card.Description>{article.description}</Card.Description>
+      <Card.Cta>Read article</Card.Cta>
+    </Card>
   )
 }
 
-function Newsletter() {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const router = useRouter();
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        try {
-            await subscribeUser({ name, email });
-            router.push(`/thank-you?name=${encodeURIComponent(name)}`);
-        } catch (error) {
-            alert("Subscription failed. Please try again");
-        }
-    };
-
-    return (
-        <form
-            onSubmit={handleSubmit}
-            className="rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40"
-        >
-            <h2 className="flex text-sm font-semibold text-zinc-900 dark:text-zinc-100">
-                <MailIcon className="h-6 w-6 flex-none" />
-                <span className="ml-3">Stay up to date</span>
-            </h2>
-            <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-                Get notified when I publish something new, and unsubscribe at any time.
-            </p>
-
-            {/* Name Input */}
-            <div className="mt-6 flex">
-                <input
-                    type="text"
-                    placeholder="Full name"
-                    aria-label="Full name"
-                    required
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="min-w-0 flex-auto appearance-none rounded-md border border-zinc-900/10 bg-white px-3 py-[calc(theme(spacing.2)-1px)] shadow-md shadow-zinc-800/5 placeholder:text-zinc-400 focus:border-teal-500 focus:outline-none focus:ring-4 focus:ring-teal-500/10 dark:border-zinc-700 dark:bg-zinc-700/[0.15] dark:text-zinc-200 dark:placeholder:text-zinc-500 dark:focus:border-teal-400 dark:focus:ring-teal-400/10 sm:text-sm"
-                />
-            </div>
-
-            {/* Email Input */}
-            <div className="mt-4 flex">
-                <input
-                    type="email"
-                    placeholder="Email address"
-                    aria-label="Email address"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="min-w-0 flex-auto appearance-none rounded-md border border-zinc-900/10 bg-white px-3 py-[calc(theme(spacing.2)-1px)] shadow-md shadow-zinc-800/5 placeholder:text-zinc-400 focus:border-teal-500 focus:outline-none focus:ring-4 focus:ring-teal-500/10 dark:border-zinc-700 dark:bg-zinc-700/[0.15] dark:text-zinc-200 dark:placeholder:text-zinc-500 dark:focus:border-teal-400 dark:focus:ring-teal-400/10 sm:text-sm"
-                />
-            </div>
-                <Button
-                    type="submit"
-                    variant="secondary"
-                    className="group mt-6 w-full"
-                >
-                    Join
-                </Button>
-        </form>
-    );
-}
+// ─── Resume / Experience ──────────────────────────────────────────────────────
 
 function Resume() {
-
-  let resume = [
-    {
-      company: 'IDEA TECH',
-      title: 'Full Stack Developer (MERN)',
-      type: 'Internship',
-      logo: logoIdaTech,
-      start: '6-1-2024',
-      end: '9-1-2024',
-    },
-    {
-      company: 'JobInTech - Simplon',
-      title: 'Backend Developer (Java)',
-      type: 'Bootcamp',
-      logo: logoJobInTech,
-      start: '12-4-2023',
-      end: '6-1-2024',
-    },
-    {
-      company: 'redgato',
-      title: 'Full Stack Developer (Java - Angular)',
-      type: 'Internship',
-      logo: logoRedGato,
-      start: '5-1-2023',
-      end: '10-1-2023',
-    },
-  ]
-
   return (
-      <div className="rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40">
-        <h2 className="flex text-sm font-semibold text-zinc-900 dark:text-zinc-100">
-          <BriefcaseIcon className="h-6 w-6 flex-none" />
-          <span className="ml-3">Experiences</span>
-        </h2>
-        <ol className="mt-6 space-y-4">
-          {resume.map((role, roleIndex) => (
-              <li key={roleIndex} className="flex gap-4">
-                <div className="relative mt-1 flex h-10 w-10 flex-none items-center justify-center rounded-full shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-zinc-800 dark:ring-0">
-                  <Image src={role.logo} alt="" className="h-7 w-7" unoptimized />
-                </div>
-                <dl className="flex flex-auto flex-wrap gap-x-2">
-                  <dt className="sr-only">Company</dt>
-                  <dd className="w-full flex-none text-sm font-medium text-zinc-900 dark:text-zinc-100">
-                    {role.company}
-                  </dd>
-                  <dt className="sr-only">Role</dt>
-                  <dd className="text-xs text-zinc-500 dark:text-zinc-400">
-                    {role.title}
-                  </dd>
-
-                  <dt className="sr-only">Date</dt>
-                  <dd
-                      className="ml-auto text-xs text-zinc-400 dark:text-zinc-500"
-                      aria-label={`${role.start.label ?? role.start} until ${
-                          role.end.label ?? role.end
-                      }`}
-                  >
-                    <time dateTime={role.start.dateTime ?? role.start}>
-                      {role.start.label ?? role.start}
-                    </time>{' '}
-                    <span aria-hidden="true">—</span>{' '}
-                    <time dateTime={role.end.dateTime ?? role.end}>
-                      {role.end.label ?? role.end}
-                    </time>
-                  </dd>
-                </dl>
-              </li>
-          ))}
-        </ol>
-        <Button
-            href = 'https://read.cv/yassinezaouibi'
-            target="_blank" rel="noopener noreferrer"
-            variant="secondary"
-            className="group mt-6 w-full"
-        >
-            Check out my CV
-        </Button>
-      </div>
+    <div className="rounded-2xl border border-zinc-100/60 bg-white/60 p-6 backdrop-blur-md shadow-sm dark:border-zinc-700/50 dark:bg-zinc-800/40">
+      <h2 className="flex text-sm font-semibold text-zinc-900 dark:text-zinc-100">
+        <BriefcaseIcon className="h-6 w-6 flex-none" />
+        <span className="ml-3">Experience</span>
+      </h2>
+      <ol className="mt-6 space-y-5">
+        {experience.map((role, roleIndex) => (
+          <li key={roleIndex} className="flex gap-4">
+            <div className="relative mt-1 flex h-10 w-10 flex-none items-center justify-center rounded-full shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-zinc-800 dark:ring-0">
+              <Image src={role.logo} alt="" className="h-7 w-7" unoptimized />
+            </div>
+            <dl className="flex flex-auto flex-wrap gap-x-2">
+              <dt className="sr-only">Company</dt>
+              <dd className="w-full flex-none text-sm font-medium text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
+                {role.company}
+                {role.highlight && (
+                  <span className="inline-flex items-center rounded-full bg-amber-50 px-2 py-0.5 text-xs font-medium text-amber-700 ring-1 ring-inset ring-amber-200 dark:bg-amber-900/20 dark:text-amber-300 dark:ring-amber-800/40">
+                    AI/ML
+                  </span>
+                )}
+              </dd>
+              <dt className="sr-only">Role</dt>
+              <dd className="text-xs text-zinc-500 dark:text-zinc-400">{role.title}</dd>
+              <dt className="sr-only">Date</dt>
+              <dd className="ml-auto text-xs text-zinc-400 dark:text-zinc-500 whitespace-nowrap">
+                {role.start} — {role.end}
+              </dd>
+            </dl>
+          </li>
+        ))}
+      </ol>
+      <Button
+        href={personalInfo.cvUrl}
+        target="_blank" rel="noopener noreferrer"
+        variant="secondary"
+        className="group mt-6 w-full"
+      >
+        <DownloadIcon className="h-4 w-4 stroke-zinc-400 transition group-active:stroke-zinc-600 dark:group-hover:stroke-zinc-50 dark:group-active:stroke-zinc-50 mr-2" />
+        Download CV
+      </Button>
+    </div>
   )
 }
+
+// ─── Education ────────────────────────────────────────────────────────────────
 
 function Education() {
-
-  let education = [
-    {
-      company: 'UMP - Faculté Pluridisciplinaire de Nador',
-      title: 'Mathématiques Appliquées a l\'Intelligence machine',
-      type: 'University',
-      logo: logoUmp,
-      start: '1-10-2024',
-      end: 'Currently',
-    },
-    {
-      company: 'Brevet de Technicien Supérieur (BTS).',
-      title: 'Développement de Systèmes D\'information.',
-      type: 'University',
-      logo: logoBts,
-      start: '1-9-2021',
-      end: '9-7-2023',
-    },
-    {
-      company: 'Baccalauréat ',
-      title: 'Science of life and earth',
-      type: 'Lycée',
-      logo: logoBac,
-      start: '1-9-2020',
-      end: '18-6-2021',
-    },
-  ]
-
   return (
-      <div className="rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40">
-        <h2 className="flex text-sm font-semibold text-zinc-900 dark:text-zinc-100">
-          <EducationIcon className="h-6 w-6 flex-none" />
-          <span className="ml-3">Education</span>
-        </h2>
-        <ol className="mt-6 space-y-4">
-          {education.map((role, roleIndex) => (
-              <li key={roleIndex} className="flex gap-4">
-                <div className="relative mt-1 flex h-10 w-10 flex-none items-center justify-center rounded-full shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-zinc-800 dark:ring-0">
-                  <Image src={role.logo} alt="" className="h-7 w-7" unoptimized />
-                </div>
-                <dl className="flex flex-auto flex-wrap gap-x-2">
-                  <dt className="sr-only">Company</dt>
-                  <dd className="w-full flex-none text-sm font-medium text-zinc-900 dark:text-zinc-100">
-                    {role.company}
-                  </dd>
-                  <dt className="sr-only">Role</dt>
-                  <dd className="text-xs text-zinc-500 dark:text-zinc-400">
-                    {role.title}
-                  </dd>
-
-                  <dt className="sr-only">Date</dt>
-                  <dd
-                      className="ml-auto text-xs text-zinc-400 dark:text-zinc-500"
-                      aria-label={`${role.start.label ?? role.start} until ${
-                          role.end.label ?? role.end
-                      }`}
-                  >
-                    <time dateTime={role.start.dateTime ?? role.start}>
-                      {role.start.label ?? role.start}
-                    </time>{' '}
-                    <span aria-hidden="true">—</span>{' '}
-                    <time dateTime={role.end.dateTime ?? role.end}>
-                      {role.end.label ?? role.end}
-                    </time>
-                  </dd>
-                </dl>
-              </li>
-          ))}
-        </ol>
-        {/*<Button*/}
-        {/*    href = 'https://read.cv/yassinezaouibi'*/}
-        {/*    target="_blank" rel="noopener noreferrer"*/}
-        {/*    variant="secondary"*/}
-        {/*    className="group mt-6 w-full"*/}
-        {/*>*/}
-        {/*    Check out my CV*/}
-        {/*</Button>*/}
-      </div>
+    <div className="rounded-2xl border border-zinc-100/60 bg-white/60 p-6 backdrop-blur-md shadow-sm dark:border-zinc-700/50 dark:bg-zinc-800/40">
+      <h2 className="flex text-sm font-semibold text-zinc-900 dark:text-zinc-100">
+        <EducationIcon className="h-6 w-6 flex-none" />
+        <span className="ml-3">Education</span>
+      </h2>
+      <ol className="mt-6 space-y-4">
+        {education.map((role, roleIndex) => (
+          <li key={roleIndex} className="flex gap-4">
+            <div className="relative mt-1 flex h-10 w-10 flex-none items-center justify-center rounded-full shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-zinc-800 dark:ring-0">
+              <Image src={role.logo} alt="" className="h-7 w-7" unoptimized />
+            </div>
+            <dl className="flex flex-auto flex-wrap gap-x-2">
+              <dt className="sr-only">Institution</dt>
+              <dd className="w-full flex-none text-sm font-medium text-zinc-900 dark:text-zinc-100">{role.company}</dd>
+              <dt className="sr-only">Degree</dt>
+              <dd className="text-xs text-zinc-500 dark:text-zinc-400">{role.title}</dd>
+              <dt className="sr-only">Date</dt>
+              <dd className="ml-auto text-xs text-zinc-400 dark:text-zinc-500 whitespace-nowrap">
+                {role.start} — {role.end}
+              </dd>
+            </dl>
+          </li>
+        ))}
+      </ol>
+    </div>
   )
 }
+
+// ─── Static Props ─────────────────────────────────────────────────────────────
 
 export async function getStaticProps() {
   if (process.env.NODE_ENV === 'production') {
@@ -403,79 +298,121 @@ export async function getStaticProps() {
   return {
     props: {
       articles: (await getAllArticles())
-          .slice(0, 4)
-          .map(({ component, ...meta }) => meta),
+        .slice(0, 4)
+        .map(({ component, ...meta }) => meta),
     },
   }
 }
 
-
+// ─── Home Page ────────────────────────────────────────────────────────────────
 
 export default function Home({ articles }) {
-    useEffect(() => {
-        // Any client-side only code can go here
-    }, [])
   return (
-      <>
-        <Head>
-          <title>Yassin Ezaouibi</title>
-          <meta
-              name="description"
-              content="I’m Yassin Ezaouibi, a software Developer based in Casablanca."
-          />
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-        <Container className="mt-9">
-          <div className="max-w-full">
-            <h1 className="text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl ">
-              Machine Learning Student,
+    <>
+      <Head>
+        <title>{personalInfo.name} — Applied Mathematics & AI Engineer</title>
+        <meta
+          name="description"
+          content="Yassin Ezaouibi — Applied Mathematics & AI Engineering student at UMP. Specializing in anomaly detection, time series analysis, mathematical optimization, and machine learning. Open to PFE internship starting Feb 2027."
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
+      {/* ── Cinematic Hero ── */}
+      <div className="relative overflow-hidden bg-zinc-100 dark:bg-[#09090b]">
+        {/* Amber glow top-left */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -top-40 -left-32 h-[500px] w-[500px] rounded-full"
+          style={{ background: 'radial-gradient(circle, rgba(251,191,36,0.12) 0%, transparent 70%)' }}
+        />
+        {/* Amber glow bottom-right */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -bottom-20 -right-20 h-[400px] w-[400px] rounded-full"
+          style={{ background: 'radial-gradient(circle, rgba(251,191,36,0.08) 0%, transparent 70%)' }}
+        />
+
+        <Container className="py-16 sm:py-20">
+          <div className="max-w-3xl">
+            {/* Availability badge */}
+            <AvailabilityBadge />
+
+            {/* Name */}
+            <h1 className="mt-5 text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-5xl leading-tight">
+              {personalInfo.name}
             </h1>
-            <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
-                I’m Yassin Ezaouibi, a Machine Learning Student. With a background in software development,
-                I am currently pursuing a degree in Applied Mathematics for Machine Intelligence at UMP.
-                Passionate about leveraging data and advanced algorithms to solve complex problems,
-                I also enjoy sharing insights through writing articles on AI. Committed to continuous learning,
-                I aim to develop innovative solutions that empower businesses and individuals to thrive in the digital landscape.
+
+            {/* Animated role — monospace amber, darker in light mode */}
+            <p className="mt-2 font-mono text-lg text-amber-600 dark:text-amber-400 tracking-wide">
+              &gt; <TypingRole variants={personalInfo.roleVariants} />
             </p>
-            <div className="mt-6 flex gap-6">
-              <SocialLink
-                  href="https://github.com/YassinEzaouibi"
+
+            {/* Quote */}
+            <blockquote className="mt-6 border-l-2 border-amber-500/50 pl-4 text-sm italic text-zinc-500 dark:text-zinc-400 leading-relaxed max-w-xl">
+              &ldquo;I bridge rigorous mathematical theory with real-world AI engineering — from stochastic analysis and optimization to deployed anomaly detection models.&rdquo;
+            </blockquote>
+
+            {/* Stat cards */}
+            <StatCards />
+
+            {/* Social + CV */}
+            <div className="mt-8 flex flex-wrap items-center gap-5">
+              <div className="flex gap-4">
+                <SocialLink
+                  href={personalInfo.social.github}
                   target="_blank" rel="noopener noreferrer"
                   aria-label="Follow on GitHub"
                   icon={GitHubIcon}
-              />
-              <SocialLink
-                  href="https://medium.com/@ezaouibiyassin"
+                />
+                <SocialLink
+                  href={personalInfo.social.medium}
                   target="_blank" rel="noopener noreferrer"
                   aria-label="Follow on Medium"
                   icon={MediumIcon}
-              />
-              <SocialLink
-                  href="https://www.linkedin.com/in/ezaouibi-yassin/"
+                />
+                <SocialLink
+                  href={personalInfo.social.linkedin}
                   target="_blank" rel="noopener noreferrer"
                   aria-label="Follow on LinkedIn"
                   icon={LinkedInIcon}
-              />
+                />
+              </div>
+              <a
+                href={personalInfo.cvUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-lg border border-amber-500/40 bg-amber-500/10 px-4 py-2 text-sm font-medium text-amber-600 dark:text-amber-400 transition hover:bg-amber-500/20 hover:border-amber-500/70"
+              >
+                <DownloadIcon className="h-3.5 w-3.5 stroke-current" />
+                View CV
+              </a>
             </div>
           </div>
         </Container>
-        {/*<Photos />*/}
-        <Container className="mt-24 md:mt-28">
-          <div className="mx-auto grid max-w-xl grid-cols-1 gap-y-20 lg:max-w-none lg:grid-cols-2">
-            <div className="flex flex-col gap-16">
-              {articles.map((article) => (
-                  <Article key={article.slug} article={article} />
-              ))}
-            </div>
-            <div className="space-y-10 lg:pl-16 xl:pl-24">
-              <Resume />
-              <Education />
-              {/*<Newsletter />*/}
-              {/*<TechStackGrid />*/}
-            </div>
+      </div>
+
+      {/* ── Main Grid ── */}
+      <Container className="mt-10 pb-16">
+        <div className="mx-auto grid max-w-xl grid-cols-1 gap-y-12 lg:max-w-none lg:grid-cols-2 lg:items-start">
+          {/* Left: Articles */}
+          <div className="flex flex-col gap-16">
+            {articles.length > 0 ? (
+              articles.map((article) => (
+                <Article key={article.slug} article={article} />
+              ))
+            ) : (
+              <p className="text-sm text-zinc-500 dark:text-zinc-400">Articles coming soon.</p>
+            )}
           </div>
-        </Container>
-      </>
+
+          {/* Right: Sidebar */}
+          <div className="space-y-8 lg:pl-16 xl:pl-24">
+            <Resume />
+            <Education />
+          </div>
+        </div>
+      </Container>
+    </>
   )
 }
-
