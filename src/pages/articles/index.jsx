@@ -45,7 +45,7 @@ export default function ArticlesIndex({ articles }) {
         />
       </Head>
       <SimpleLayout
-        title="Writing on software design, company building, and Artificiel Intelligence."
+        title="Writing on software design, company building, and Artificial Intelligence."
         intro="All of my long-form thoughts on programming, AI, leadership,  and more, collected in chronological order."
       >
         <div className="md:border-l md:border-zinc-100 md:pl-6 md:dark:border-zinc-700/40">

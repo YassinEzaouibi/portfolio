@@ -16,9 +16,6 @@ import { getAllArticles } from '@/lib/getAllArticles'
 import { formatDate } from '@/lib/formatDate'
 import { useEffect, useState, useRef } from 'react'
 
-import { subscribeUser } from '@/services/newsletterService'
-import { useRouter } from 'next/compat/router'
-
 import { personalInfo, experience, education, skills } from '@/data/info'
 
 // ─── Icons ───────────────────────────────────────────────────────────────────
@@ -394,23 +391,9 @@ export default function Home({ articles }) {
 
       {/* ── Main Grid ── */}
       <Container className="mt-10 pb-16">
-        <div className="mx-auto grid max-w-xl grid-cols-1 gap-y-12 lg:max-w-none lg:grid-cols-2 lg:items-start">
-          {/* Left: Articles */}
-          <div className="flex flex-col gap-16">
-            {articles.length > 0 ? (
-              articles.map((article) => (
-                <Article key={article.slug} article={article} />
-              ))
-            ) : (
-              <p className="text-sm text-zinc-500 dark:text-zinc-400">Articles coming soon.</p>
-            )}
-          </div>
-
-          {/* Right: Sidebar */}
-          <div className="space-y-8 lg:pl-16 xl:pl-24">
-            <Resume />
-            <Education />
-          </div>
+        <div className="mx-auto grid max-w-xl grid-cols-1 gap-y-12 lg:max-w-none lg:grid-cols-2 lg:items-start lg:gap-x-12">
+          <Resume />
+          <Education />
         </div>
       </Container>
     </>

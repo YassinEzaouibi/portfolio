@@ -125,7 +125,7 @@ export default function About() {
                   rel="noopener noreferrer"
                   className="group flex text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 transition"
                 >
-                  <span>→ View full CV on read.cv</span>
+                  <span>→ View full CV</span>
                 </Link>
               </li>
             </ul>

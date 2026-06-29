@@ -2,7 +2,7 @@ import { useState } from 'react';
 import portraitImage from '@/images/avatar.jpg';
 import Image from "next/image";
 import { Button } from "@/components/Button";
-import {useRouter} from "next/compat/router";
+import { useRouter } from 'next/router';
 
 export default function HireMe() {
   const [formData, setFormData] = useState({

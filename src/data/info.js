@@ -18,7 +18,8 @@ export const personalInfo = {
         "Anomaly Detection Specialist",
     ],
     availableFor: "PFE Internship · Feb 2027",
-    cvUrl: "https://read.cv/yassinezaouibi",
+    email: "zouibiyassin03@gmail.com",
+    cvUrl: "/yassin-ezaouibi-resume.pdf",
     description: `I'm Yassin Ezaouibi — an Applied Mathematics & AI Engineering student at UMP, where my studies span mathematical optimization, probability theory, statistics, fractal mathematics, financial mathematics, and machine learning. I bridge rigorous math foundations with real-world AI engineering: I built and deployed an anomaly detection model for industrial energy consumption during a 6-month internship at Ainubes GmbH. I'm looking for a PFE research internship (starting February 2027) at a company pushing the frontier of data-driven intelligence.`,
     about: {
         title: "Applied Mathematics student building real AI — from theory to deployed models.",

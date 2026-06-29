@@ -1,7 +1,7 @@
 import Head from 'next/head'
 
 import { SimpleLayout } from '@/components/SimpleLayout'
-import {useRouter} from "next/compat/router";
+import { useRouter } from 'next/router';
 
 export default function ContactSuccess() {
     const router = useRouter();
